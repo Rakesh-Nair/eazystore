@@ -1,8 +1,11 @@
-import React from 'react'
-import PageTitle from './PageTitle';
+import React from "react";
+import PageTitle from "./PageTitle";
 
-export default function PageHeading() {
+export default function PageHeading(props) {
   return (
-    <PageTitle />
+    <div className="page-heading-container">
+      <PageTitle title="Explore Eazy Stickers!"></PageTitle>
+      <p className="page-heading-paragraph">{props.children}</p>
+    </div>
   );
-};
+}
