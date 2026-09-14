@@ -44,3 +44,5 @@ temp/
 *.tmp
 *.swp
 *.swo
+eazystore/data/eazystore.trace.db
+eazystore/data/eazystore.mv.db
