@@ -8,10 +8,10 @@ import org.hibernate.annotations.ColumnDefault;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-@Entity
-@Table(name = "PRODUCTS")
 @Getter
 @Setter
+@Entity
+@Table(name = "PRODUCTS")
 public class Product {
 
     @Id

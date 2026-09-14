@@ -15,9 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
 
-    private final ProductRepository productRepository;
-
-    private final IProductService productService;
+   private final IProductService productService;
 
     @GetMapping
     public List<Product> getProducts(){
