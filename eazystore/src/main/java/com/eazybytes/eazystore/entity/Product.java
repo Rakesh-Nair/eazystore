@@ -1,46 +1,51 @@
 package com.eazybytes.eazystore.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
-@Table(name = "products")
-@Data
+@Table(name = "PRODUCTS")
+@Getter
+@Setter
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id", nullable = false)
+    @Column(name = "PRODUCT_ID", nullable = false)
     private Long productId;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "NAME", nullable = false)
     private String name;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
-    @Column(name = "price", nullable = false)
+    @Column(name = "PRICE", nullable = false)
     private BigDecimal price;
 
-    @Column(name = "popularity", nullable = false)
+    @Column(name = "POPULARITY", nullable = false)
     private Integer popularity;
 
-    @Column(name = "image_url", nullable = true)
+    @Column(name = "IMAGE_URL", nullable = true)
     private String imageUrl;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "CREATED_AT", nullable = false)
     private Instant createdAt;
 
-    @Column(name = "created_by", nullable = false)
+    @Column(name = "CREATED_BY", nullable = false)
     private String createdBy;
 
-    @Column(name = "updated_at", nullable = true)
+    @ColumnDefault("NULL")
+    @Column(name = "UPDATED_AT", nullable = true)
     private Instant updatedAt;
 
-    @Column(name = "updated_by", nullable = true)
+    @ColumnDefault("NULL")
+    @Column(name = "UPDATED_BY", nullable = true)
     private String updatedBy;
 
 }
