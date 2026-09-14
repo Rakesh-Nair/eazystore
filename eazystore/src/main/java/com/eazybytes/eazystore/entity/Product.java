@@ -34,6 +34,7 @@ public class Product {
     @Column(name = "IMAGE_URL", nullable = true)
     private String imageUrl;
 
+    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "CREATED_AT", nullable = false)
     private Instant createdAt;
 
