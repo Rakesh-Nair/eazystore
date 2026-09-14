@@ -46,3 +46,4 @@ temp/
 *.swo
 eazystore/data/eazystore.trace.db
 eazystore/data/eazystore.mv.db
+eazystore/data/eazystore.lock.db
