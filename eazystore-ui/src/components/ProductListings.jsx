@@ -7,9 +7,14 @@ const sortList = ["Popularity", "Price Low to High", "Price High to Low"];
 
 function ProductListings({ products }) {
   const [searchText, setSearchText] = useState("");
+  const [selectedSort, setSelectedSort] = useState("Popularity");
 
   function handleInputChange(inputSearch) {
     setSearchText(inputSearch);
+  }
+
+  function handleSortChange(sortType) {
+    setSelectedSort(sortType);
   }
 
   let filteredAndSortedProducts = Array.isArray(products)
@@ -21,6 +26,24 @@ function ProductListings({ products }) {
       })
     : [];
 
+  switch (selectedSort) {
+    case "Price Low to High":
+      filteredAndSortedProducts = filteredAndSortedProducts.sort(
+        (a, b) => parseInt(a.price) - parseInt(b.price),
+      );
+      break;
+    case "Price High to Low":
+      filteredAndSortedProducts = filteredAndSortedProducts.sort(
+        (a, b) => parseInt(b.price) - parseInt(a.price),
+      );
+      break;
+    case "Popularity":
+    default:
+      filteredAndSortedProducts = filteredAndSortedProducts.sort(
+        (a, b) => parseInt(b.popularity) - parseInt(a.popularity),
+      );
+      break;
+  }
   return (
     <div className="max-w-[1152px] mx-auto">
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-12">
@@ -32,7 +55,14 @@ function ProductListings({ products }) {
             handleInputChange(value);
           }}
         />
-        <Dropdown label="Sort By" options={sortList} value="Popularity" />
+        <Dropdown
+          label="Sort By"
+          options={sortList}
+          value={selectedSort}
+          handleSort={(value) => {
+            handleSortChange(value);
+          }}
+        />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-6 py-12">
         {filteredAndSortedProducts.length > 0 ? (
