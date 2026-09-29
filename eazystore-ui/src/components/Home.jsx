@@ -30,7 +30,6 @@ export default function Home() {
           <span className="text-xl font-semibold">Loading Products...</span>
         </div>
       )
-
     }
 
     if(error){
