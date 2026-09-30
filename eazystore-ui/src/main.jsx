@@ -7,32 +7,39 @@ import Contact from "./components/Contact.jsx";
 import Login from "./components/Login.jsx";
 import Cart from "./components/Cart.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from "./components/Home.jsx";
 
 const appRouter = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: "/home",
+        element: <Home />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
+      },
+    ],
   },
-  {
-    path: "/home",
-    element: <App />,
-  },
-  {
-    path: "/about",
-    element: <About />,
-  },
-  {
-    path: "/contact",
-    element: <Contact />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/cart",
-    element: <Cart />,
-  }
 ]);
 
 createRoot(document.getElementById("root")).render(
