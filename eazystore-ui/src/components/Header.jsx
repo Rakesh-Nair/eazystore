@@ -1,7 +1,25 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingBasket, faTags } from "@fortawesome/free-solid-svg-icons";
+import {
+  faShoppingBasket,
+  faTags,
+  faSun,
+  faMoon,
+} from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 
 export default function Header() {
+  const [theme, setTheme] = useState("light");
+  const toggleTheme = () => {
+    setTheme((prevTheme) => {
+      const newTheme = prevTheme === "light" ? "dark" : "light";
+      if (newTheme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+      return newTheme;
+    });
+  };
   const navLinkClass =
     "text-center text-lg font-primary font-semibold text-primary py-2";
   return (
@@ -15,6 +33,17 @@ export default function Header() {
           <span className="font-bold">Eazy Stickers</span>
         </a>
         <nav className="flex items-center py-2 z-10">
+          <button
+            className="flex items-center justify-center mx-3 w-8 h-8 rounded-full border border-primary
+           dark:border-light transition duration-300 hover:bg-gray-300 dar:hover:bg-gray-600"
+            aria-label="Toggle theme"
+          >
+            <FontAwesomeIcon
+              icon={theme === "dark" ? faMoon : faSun}
+              className="w-4 h-4 dar:text-light text-primary"
+              onClick={toggleTheme}
+            />
+          </button>
           <ul className="flex space-x-6">
             <li>
               <a href="/" className={navLinkClass}>
@@ -22,26 +51,17 @@ export default function Header() {
               </a>
             </li>
             <li>
-              <a
-                href="/about"
-                className={navLinkClass}
-              >
+              <a href="/about" className={navLinkClass}>
                 About
               </a>
             </li>
             <li>
-              <a
-                href="/contact"
-                className={navLinkClass}
-              >
+              <a href="/contact" className={navLinkClass}>
                 Contact
               </a>
             </li>
             <li>
-              <a
-                href="/login"
-                className={navLinkClass}
-              >
+              <a href="/login" className={navLinkClass}>
                 Login
               </a>
             </li>
