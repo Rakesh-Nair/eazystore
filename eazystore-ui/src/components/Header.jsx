@@ -6,7 +6,7 @@ import {
   faMoon,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigation } from "react-router-dom";
 
 export default function Header() {
   const [theme, setTheme] = useState(() => {

@@ -2,10 +2,15 @@ import PageHeading from "./PageHeading";
 import ProductListings from "./ProductListings";
 import apiClient from "../api/apiClient";
 import { useState, useEffect } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useLocation } from "react-router-dom";
 
 export default function Home() {
   const products = useLoaderData();
+  // const location = useLocation();
+  // const username = location.state;
+  // const path = location.pathname;
+
+  // console.log("Location state:", username + " " + path);
 
   return (
     <div className="max-w-[1152px] mx-auto px-6 py-8">
