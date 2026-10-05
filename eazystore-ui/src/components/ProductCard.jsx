@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function ProductCard({ product }) {
   return (
-    <Link to={`/products/${product.productId}`}
+    <Link to={`/products/${product.productId}`} state={{product}}
       className="w-72 rounded-md mx-auto border border-gray-300 dark:border-gray-600 
     shadow-md overflow-hidden flex flex-col bg-white dark:bg-gray-800 hover:border-primary dark:hover:border-lighter transition"
     >
