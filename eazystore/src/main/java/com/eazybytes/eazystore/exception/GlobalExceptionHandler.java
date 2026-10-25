@@ -4,6 +4,7 @@ package com.eazybytes.eazystore.exception;
 import com.eazybytes.eazystore.dto.ErrorResponseDto;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -19,10 +20,12 @@ import java.util.Map;
 import java.util.Set;
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationException(MethodArgumentNotValidException exception) {
+        log.error("An Exception occured due to : " + exception.getMessage());
         Map<String, String> errors = new HashMap<>();
         final List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
         fieldErrors.forEach(fieldError -> errors.put(fieldError.getField(), fieldError.getDefaultMessage()));
@@ -31,6 +34,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Map<String, String>> handleConstraintViolationException(ConstraintViolationException exception) {
+        log.error("An Exception occured due to : " + exception.getMessage());
         Map<String, String> errors = new HashMap<>();
         final Set<ConstraintViolation<?>> constraintViolations = exception.getConstraintViolations();
         constraintViolations.forEach(constraintViolation -> errors.put(constraintViolation.getPropertyPath().toString(), constraintViolation.getMessage()));
@@ -42,6 +46,7 @@ public class GlobalExceptionHandler {
         ErrorResponseDto errorResponseDto = new ErrorResponseDto(request.getDescription(false),
                 HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage(), LocalDateTime.now());
         //return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponseDto);
+        log.error("An Exception occured due to : " + exception.getMessage());
         return new ResponseEntity<>(errorResponseDto, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
