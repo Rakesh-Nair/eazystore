@@ -28,6 +28,11 @@ export async function productsLoader() {
     const response = await apiClient.get("/products");
     return response.data; // Assuming the API returns an array of products
   } catch (error) {
+
+    if(error.response?.status === 400){
+      return {succes: false, errors: error.response?.data|| ["Bad Request"]};
+    }
+
     throw new Response(
       error.response?.data?.errorMessage ||
         error.message ||
