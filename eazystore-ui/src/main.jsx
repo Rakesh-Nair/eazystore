@@ -17,8 +17,9 @@ import Home from "./components/Home.jsx";
 import ErrorPage from "./components/ErrorPage.jsx";
 import { productsLoader } from "./components/Home.jsx";
 import { ToastContainer, Bounce } from "react-toastify";
-import  ProductDetail  from "./components/ProductDetail.jsx";
+import ProductDetail from "./components/ProductDetail.jsx";
 import "react-toastify/dist/ReactToastify.css";
+import { CartContext } from "./store/cart-context.jsx";
 
 const routeDefinitions = createRoutesFromElements(
   <Route path="/" element={<App />} errorElement={<ErrorPage />}>
@@ -33,6 +34,14 @@ const routeDefinitions = createRoutesFromElements(
 );
 
 const appRouter = createBrowserRouter(routeDefinitions);
+
+const initialCartContext = {
+  cart:[],
+  setCart: () => {},
+  addToCart: () => {},
+  removeFromCart:() => {},
+  totalQuantity: 0
+};
 
 // const appRouter = createBrowserRouter([
 //   {
@@ -70,7 +79,10 @@ const appRouter = createBrowserRouter(routeDefinitions);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={appRouter} />
+    <CartContext.Provider value={initialCartContext}>
+      <RouterProvider router={appRouter} />
+    </CartContext.Provider>
+
     <ToastContainer
       postition="top-center"
       autoClose={3000}
