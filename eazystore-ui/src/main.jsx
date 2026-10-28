@@ -36,11 +36,13 @@ const routeDefinitions = createRoutesFromElements(
 const appRouter = createBrowserRouter(routeDefinitions);
 
 const initialCartContext = {
-  cart:[],
+  cart: [],
   setCart: () => {},
-  addToCart: () => {},
-  removeFromCart:() => {},
-  totalQuantity: 0
+  addToCart: () => {
+    console.log("addToCart function called");
+  },
+  removeFromCart: () => {},
+  totalQuantity: 0,
 };
 
 // const appRouter = createBrowserRouter([
