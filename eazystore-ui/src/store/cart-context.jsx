@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 
 // const initialCartContext = {
 //   cart: [],
@@ -13,24 +13,28 @@ import { createContext, useState, useEffect } from "react";
 //Step 1: Create the context
 export const CartContext = createContext();
 
+export const useCart = ()  => useContext(CartContext);
+
 export const CartProvider = ({ children }) => {
-  try {
-    //Initialize cart state from localStorage or as an empty array
-    const [cart, setCart] = useState(() => {
+  // Initialize cart state from localStorage or as an empty array.
+  // The error handling belongs inside the initializer so `cart` remains in
+  // scope for the effects and calculations below.
+  const [cart, setCart] = useState(() => {
+    try {
       const storedCart = localStorage.getItem("cart");
       return storedCart ? JSON.parse(storedCart) : [];
-    });
-  } catch (error) {
-    console.error("Failed to parse cart from localStorage", error);
-    return [];
-  }
+    } catch (error) {
+      console.error("Failed to parse cart from localStorage", error);
+      return [];
+    }
+  });
 
   //Save cart to localStorage whenever it changes
   useEffect(() => {
     try {
       localStorage.setItem("cart", JSON.stringify(cart));
     } catch (error) {
-      console.error("Failed to save cart to localStorage", error);
+      console.error("Failed to save cart to localStorage:", error);
     }
   }, [cart]);
 
