@@ -57,16 +57,16 @@ public class EazyStoreSecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        var user1 = User.builder().username("admin").password("pass")
+    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
+        var user1 = User.builder().username("admin").password(passwordEncoder.encode("pass"))
                 .roles("ADMIN")
                 .build();
 
-        var user2 = User.builder().username("rakesh").password("pass")
+        var user2 = User.builder().username("rakesh").password(passwordEncoder.encode("pass"))
                 .roles("USER")
                 .build();
 
-        var user3 = User.builder().username("rudra").password("pass")
+        var user3 = User.builder().username("rudra").password(passwordEncoder.encode("pass"))
                 .roles("USER")
                 .build();
 
