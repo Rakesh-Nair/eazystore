@@ -3,6 +3,9 @@ package com.eazybytes.eazystore.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -58,15 +61,15 @@ public class EazyStoreSecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-        var user1 = User.builder().username("admin").password(passwordEncoder.encode("$2a$12$YukAdg8xrkrVJ85gqq48gOUbw1LBWKFsmTnABebVwDKmq87nyRfQu"))
+        var user1 = User.builder().username("admin").password("$2a$12$F4AOUe.TGulTb8.sTqaXTuiJvguMUevVLTlg637PvgcWOpFLBmaeW")
                 .roles("ADMIN")
                 .build();
 
-        var user2 = User.builder().username("rakesh").password(passwordEncoder.encode("$2a$12$YukAdg8xrkrVJ85gqq48gOUbw1LBWKFsmTnABebVwDKmq87nyRfQu"))
+        var user2 = User.builder().username("rakesh").password("$2a$12$YukAdg8xrkrVJ85gqq48gOUbw1LBWKFsmTnABebVwDKmq87nyRfQu")
                 .roles("USER")
                 .build();
 
-        var user3 = User.builder().username("rudra").password(passwordEncoder.encode("$2a$12$YukAdg8xrkrVJ85gqq48gOUbw1LBWKFsmTnABebVwDKmq87nyRfQu"))
+        var user3 = User.builder().username("rudra").password("$2a$12$YukAdg8xrkrVJ85gqq48gOUbw1LBWKFsmTnABebVwDKmq87nyRfQu")
                 .roles("USER")
                 .build();
 
@@ -77,5 +80,12 @@ public class EazyStoreSecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+        var daoAuthenticationProvider = new DaoAuthenticationProvider(userDetailsService);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
+        return new ProviderManager(daoAuthenticationProvider);
     }
 }
