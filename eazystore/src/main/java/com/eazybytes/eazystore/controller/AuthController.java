@@ -2,6 +2,7 @@ package com.eazybytes.eazystore.controller;
 
 import com.eazybytes.eazystore.dto.LoginRequestDto;
 import com.eazybytes.eazystore.dto.LoginResponseDto;
+import com.eazybytes.eazystore.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,14 +23,18 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
 
+    private final JwtUtil jwtUtil;
+
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> apiLogin(@RequestBody LoginRequestDto loginRequestDto) {
 
         try {
             final Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDto.username(),
                     loginRequestDto.password()));
-            return ResponseEntity.status(HttpStatus.OK).body(new LoginResponseDto(HttpStatus.OK.getReasonPhrase(), null, null));
-            
+            String jwtToken = jwtUtil.generateJwtToken(authentication);
+            return ResponseEntity.status(HttpStatus.OK).body(new LoginResponseDto(HttpStatus.OK.getReasonPhrase(),
+                    null, jwtToken));
+
         } catch (BadCredentialsException ex) {
             return buildErrorResponse(HttpStatus.UNAUTHORIZED, "Invalid username or password");
         } catch (AuthenticationException ex) {
