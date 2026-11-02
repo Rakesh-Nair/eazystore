@@ -111,7 +111,7 @@ export async function loginAction({ request }) {
     if (error.response?.status === 401) {
       return {
         success: false,
-        message: "Invalid username or password",
+        errors: { message: "Invalid username or password" },
       };
     }
 
