@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App.jsx";
 import About from "./components/About.jsx";
 import Contact from "./components/Contact.jsx";
-import Login, {loginAction} from "./components/Login.jsx";
+import Login, { loginAction } from "./components/Login.jsx";
 import Cart from "./components/Cart.jsx";
 import { contactAction } from "./components/Contact.jsx";
 import {
@@ -20,6 +20,8 @@ import { ToastContainer, Bounce } from "react-toastify";
 import ProductDetail from "./components/ProductDetail.jsx";
 import "react-toastify/dist/ReactToastify.css";
 import { CartProvider } from "./store/cart-context.jsx";
+import { AuthProvider } from "./store/auth-context.jsx";
+import Checkout from "./components/checkout.jsx";
 
 const routeDefinitions = createRoutesFromElements(
   <Route path="/" element={<App />} errorElement={<ErrorPage />}>
@@ -29,13 +31,12 @@ const routeDefinitions = createRoutesFromElements(
     <Route path="/contact" element={<Contact />} action={contactAction} />
     <Route path="/login" element={<Login />} action={loginAction} />
     <Route path="/cart" element={<Cart />} />
+    <Route path="/checkout" element={<Checkout />} />
     <Route path="/products/:productId" element={<ProductDetail />} />
   </Route>,
 );
 
 const appRouter = createBrowserRouter(routeDefinitions);
-
-
 
 // const appRouter = createBrowserRouter([
 //   {
@@ -73,10 +74,11 @@ const appRouter = createBrowserRouter(routeDefinitions);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <CartProvider>
-      <RouterProvider router={appRouter} />
-    </CartProvider>
-
+    <AuthProvider>
+      <CartProvider>
+        <RouterProvider router={appRouter} />
+      </CartProvider>
+    </AuthProvider>
     <ToastContainer
       postition="top-center"
       autoClose={3000}
